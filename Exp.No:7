@@ -1,0 +1,106 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+int main()
+{
+    int ch,size,i,loc,num,j,l;
+    int flag=1,num1,k;
+    int *ptr,*ptr1;
+    while(1)
+    {
+        printf(" Implement Array Operations ");
+        printf("\n 1.Create");
+        printf("\n 2.Display");
+        printf("\n 3.Insert");
+        printf("\n 4.Delete");
+        printf("\n 5.Exit");
+        printf("\n Enter your choice: ");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:
+                printf("\n Enter the size: ");
+                scanf("%d",&size);
+                ptr=(int*)malloc(size*sizeof(int));
+                printf("\n Enter the elements: ");
+                for(i=0;i<size;i++)
+                scanf("%d",ptr+i);
+                break;
+            case 2:
+                printf("\n The displayed array:  ");
+                for(i=0;i<size;i++)
+                printf("%5d",*(ptr+i));
+                getch();
+                break;
+            case 3:
+                printf("\n Enter location you want to insert: ");
+                scanf("%d",&loc);
+                if(loc>size)
+                {
+                    printf("\n Error!Location out of range try again");
+                    getch();
+                }
+                else
+                {
+                    printf("\n Enter the new item: ");
+                    scanf("%d",&num);
+                    ptr1=(int *)malloc(sizeof(int)*size);
+                    for(i=0;i<size;i++)
+                        *(ptr1+i)=*(ptr+i);
+                    free(ptr);
+                    size++;
+                    ptr=(int *)malloc(sizeof(int)*size);
+                    for(i=0,j=0;i<size;i++,j++)
+                    {
+                        if(i==loc)
+                            ptr[j]=num;
+                        else if(i>loc)
+                            ptr[j]=ptr1[i-1];
+                        else
+                            ptr[j]=ptr1[i];
+                    }
+                    free(ptr1);
+                }
+                break;
+            case 4:
+                printf("\n Enter the number you want to delete: ");
+                scanf("%d",&num1);
+                for(l=0;l<size;l++)
+                {
+                    if(num1==ptr[l])
+                    {
+                        flag=0;
+                        break;
+                    }
+                }
+                if(flag==1)
+                {
+                    printf("\nThe No. Not found!");
+                    getch();
+                }
+                else
+                {
+                    ptr1=(int*) malloc(sizeof(int)*size);
+                    for(k=0;k<size;k++)
+                        *(ptr1+k)=*(ptr+k);
+                    size--;
+                    free(ptr);
+                    ptr=(int*) malloc(sizeof(int)*size);
+                    for(i=0,j=0;i<size+1;i++,j++)
+                    {
+                        if(i>l)
+                            ptr[j-1]=ptr1[i];
+                        else
+                        {
+                            if(ptr1[j]!=num1)
+                                ptr[j]=ptr1[i];
+                        }
+                    }
+                    free(ptr1);
+                }
+                break;
+            case 5:
+                exit(0);
+         }
+    }
+}
